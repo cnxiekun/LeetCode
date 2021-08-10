@@ -18,13 +18,13 @@ class Solution:
             else:
                 seen[v] = i
         return "No solution found"
-        # 54/54 cases passed (3072 ms)
-        # Your runtime beats 23.69 % of python3 submissions
-        # Your memory usage beats 70.87 % of python3 submissions (15 MB)
-        for i in range(len(nums) - 1):
-            for j in range(i+1, len(nums)):
-                if nums[i] + nums[j] == target:
-                    return [i, j]
-        return "No solution found"
+        # # 54/54 cases passed (3072 ms)
+        # # Your runtime beats 23.69 % of python3 submissions
+        # # Your memory usage beats 70.87 % of python3 submissions (15 MB)
+        # for i in range(len(nums) - 1):
+        #     for j in range(i+1, len(nums)):
+        #         if nums[i] + nums[j] == target:
+        #             return [i, j]
+        # return "No solution found"
 # @lc code=end
 
