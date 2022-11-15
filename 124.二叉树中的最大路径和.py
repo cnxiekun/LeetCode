@@ -15,23 +15,37 @@ class TreeNode:
 
 class Solution:
     def maxPathSum(self, root: TreeNode) -> int:
-        self.max_sum = float('-inf')
+        # self.max_sum = float('-inf')
 
-        def traverse(root):
-            if not root:
-                return float('-inf')
+        # def traverse(root):
+        #     if not root:
+        #         return float('-inf')
             
-            left = traverse(root.left)
-            right = traverse(root.right)
-            # 以下三种情况不可向上累加，因此设置全局变量存储不可累加的最大值
-            # 向上累加：是指最大路劲和可包含当前根节点
-            self.max_sum = max(self.max_sum, left, right, root.val + left + right)
+        #     left = traverse(root.left)
+        #     right = traverse(root.right)
+        #     # 以下三种情况不可向上累加，因此设置全局变量存储不可累加的最大值
+        #     # 向上累加：是指最大路劲和可包含当前根节点
+        #     self.max_sum = max(self.max_sum, left, right, root.val + left + right)
 
-            # 用递归返回可向上累加的最大值
-            return max(root.val, root.val + left, root.val + right)
+        #     # 用递归返回可向上累加的最大值
+        #     return max(root.val, root.val + left, root.val + right)
         
-        new_max = traverse(root)
+        # new_max = traverse(root)
 
-        return max(self.max_sum, new_max)
+        # return max(self.max_sum, new_max)
+        self.max_sum = float('-inf')
+        self.oneSideMax(root)
+        return self.max_sum
+    
+    def oneSideMax(self, root):
+        if not root:
+            return 0
+        
+        left = max(0, self.oneSideMax(root.left))
+        right = max(0, self.oneSideMax(root.right))
+        self.max_sum = max(self.max_sum, root.val + left + right)
+
+        return max(left, right) + root.val
+
 # @lc code=end
 
