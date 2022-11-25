@@ -7,17 +7,13 @@
 # @lc code=start
 class Solution:
     def findAnagrams(self, s: str, p: str) -> List[int]:
-        # 61/61 cases passed (80 ms)
-        # Your runtime beats 79.81 % of python3 submissions
-        # Your memory usage beats 14.11 % of python3 submissions (15.5 MB)
         if len(p) > len(s):
             return []
 
         res = []
     
-        # 不可以用 window = need = {}
         window, need = {}, {}
-        valid = 0
+        valid, left, right = 0, 0, 0
         for c in p:
             if c in need:
                 need[c] += 1
@@ -25,23 +21,9 @@ class Solution:
                 need[c] = 1
         left = right = 0
 
-        # 滑动窗口：[start, right) 左闭右开
-        while right < len(p):
-            c = s[right]
-            right += 1
-            if c in window:
-                window[c] += 1
-            else:
-                window[c] = 1
-
-            if c in need and window[c] == need[c]:
-                valid += 1
-        
-        if valid == len(need):
-            res.append(0)
-
-        # 否则开始向右滑动一个位置
+        # 滑动窗口：[start, right] 
         while right < len(s):
+            # 扩大窗口
             c = s[right]
             right += 1
             if c in window:
@@ -51,15 +33,19 @@ class Solution:
 
             if c in need and window[c] == need[c]:
                 valid += 1
-                
-            c = s[left]
-            left += 1
-            if c in need and window[c] == need[c]:
-                valid -= 1
-            window[c] -= 1
 
-            if valid == len(need):
-                res.append(left)
+            # 判断是否需要收缩窗口
+            while right - left >= len(p):
+                # 先判断是否符合要求
+                if valid == len(need):
+                    res.append(left)
+
+                c = s[left]
+                left += 1
+                if c in need:
+                    if window[c] == need[c]:
+                        valid -= 1
+                    window[c] -= 1
         
         return res
 # @lc code=end
