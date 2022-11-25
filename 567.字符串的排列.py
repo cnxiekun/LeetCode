@@ -18,50 +18,29 @@ class Solution:
             else:
                 need[c] = 1
         
-        # 滑动窗口：始终保持窗口长度与s1等长
-        # [left, right)
-        # 初始化window，保持与s1一样大小
-        while right < len(s1):
-            # window中新增需要加入的字符
-            c = s2[right]
-            right += 1
-            if c in window:
-                window[c] += 1
-            else:
-                window[c] = 1
-            # 判断当前字符c是否满足要求
-            if c in s1 and need[c] == window[c]:
-                valid += 1
-        
-        # 此时初始化window已完成，即选取了s2中前len(s1)个元素
-        # 首次判断是否符合
-        if valid == len(need):
-            return True
-        
-        # 否则移动窗口：窗口+1、窗口-1
+        # 滑动窗口：right先扩大，然后移动left，始终保持窗口长度与s1等长
         while right < len(s2):
-            # 窗口right+1
             c = s2[right]
             right += 1
-            if c in window:
-                window[c] += 1
-            else:
-                window[c] = 1
+            if c in need:
+                if c in window:
+                    window[c] += 1
+                else:
+                    window[c] = 1
+                if need[c] == window[c]:
+                    valid += 1
             
-            if c in s1 and need[c] == window[c]:
-                valid += 1
-            
-            # 窗口left+1
-            c = s2[left]
-            left += 1
-
-            if c in s1 and need[c] == window[c]:
-                valid -= 1
-            window[c] -= 1
-            
-            if valid == len(need):
-                return True
-            
+            # 判断是否需要收缩窗口, [left, right]
+            while right - left >= len(s1):
+                # 判断是否符合要求
+                if valid == len(need):
+                    return True
+                c = s2[left]
+                left += 1
+                if c in need:
+                    if window[c] == need[c]:
+                        valid -= 1
+                    window[c] -= 1
         return False
 # @lc code=end
 
