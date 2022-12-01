@@ -12,25 +12,23 @@
 #         self.next = next
 class Solution:
     def reverseList(self, head: ListNode) -> ListNode:
-        """迭代"""
-        # 28/28 cases passed (48 ms)
-        # Your runtime beats 28.42 % of python3 submissions
-        # Your memory usage beats 29.11 % of python3 submissions (15.6 MB)
+        # """
+        # 迭代
+        # """
         # res = None
-        # current = head
-        # while current:
-        #     res, res.next, current = current, res, current.next
+        # while head:
+        #     res, res.next, head = head, res, head.next
         # return res
 
-        """递归"""
-        # 28/28 cases passed (32 ms)
-        # Your runtime beats 93.29 % of python3 submissions
-        # Your memory usage beats 15.39 % of python3 submissions (19.6 MB)
+        """
+        递归
+        """
         if not head or not head.next:
             return head
-        res = self.reverseList(head.next)
+        
+        last = self.reverseList(head.next)
         head.next.next = head
         head.next = None
-        return res
+        return last
 # @lc code=end
 
