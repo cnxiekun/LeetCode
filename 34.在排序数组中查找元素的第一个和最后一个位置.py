@@ -16,9 +16,9 @@ class Solution:
         while left <= right:
             med = (left + right) // 2
             if nums[med] >= target:
-                right -= 1
+                right = med - 1
             else:
-                left += 1
+                left = med + 1
         return left
 
     
@@ -27,9 +27,9 @@ class Solution:
         while left <= right:
             med = (left + right) // 2
             if nums[med] <= target:
-                left += 1
+                left = med + 1
             else:
-                right -= 1
+                right = med - 1
         return right
 # @lc code=end
 
